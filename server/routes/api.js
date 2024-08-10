@@ -61,12 +61,20 @@ function newProblem(data){
   // });
 
   problem_package.save()
-  .then(() => {
-    console.log('problem_package saved successfully');
-  })
-  .catch(error => {
-    console.error('Error saving problem_package:', error.message);
-  });
+    .then(() => {
+      console.log('problem_package saved successfully');
+      // Invalidate cache after saving new problem
+      redisClient.del('problem-list', (err, reply) => {
+        if (err) {
+          console.error('Error invalidating cache:', err);
+        } else {
+          console.log('Cache invalidated:', reply);
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error saving problem_package:', error.message);
+    });
 
   
   // push test data to s3 bucket

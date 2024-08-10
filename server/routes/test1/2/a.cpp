@@ -33,8 +33,9 @@ int main()
                 }
                 else ans="NO";
             }
-        }
+        
         cout<<ans<<endl;
-
+   
     }
+}
 }
